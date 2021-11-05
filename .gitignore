@@ -28,3 +28,10 @@ target
 # Project exclude paths
 target
 out
+
+*.iml
+target
+.idea
+# Project exclude paths
+target
+out
