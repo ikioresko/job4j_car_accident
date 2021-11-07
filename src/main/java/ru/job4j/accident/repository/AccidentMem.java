@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class AccidentMem implements MemStore {
     private final HashMap<Integer, Accident> accidents = new HashMap<>();
+    private final AtomicInteger accidentId = new AtomicInteger(5);
 
     public AccidentMem() {
         for (Accident acc : generate()) {
@@ -34,5 +36,12 @@ public class AccidentMem implements MemStore {
     @Override
     public Collection<Accident> getAccidents() {
         return accidents.values();
+    }
+
+    @Override
+    public void save(Accident accident) {
+        int id = accidentId.incrementAndGet();
+        accident.setId(id);
+        accidents.put(id, accident);
     }
 }

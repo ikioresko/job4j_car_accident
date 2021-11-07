@@ -7,4 +7,6 @@ import java.util.Collection;
 public interface MemStore {
 
     Collection<Accident> getAccidents();
+
+    void save(Accident accident);
 }

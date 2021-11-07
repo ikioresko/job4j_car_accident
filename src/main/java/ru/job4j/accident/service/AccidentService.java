@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class AccidentService {
-    private MemStore store;
+    private final MemStore store;
 
     public AccidentService(MemStore store) {
         this.store = store;
@@ -17,5 +17,9 @@ public class AccidentService {
 
     public List<Accident> getAccidents() {
         return new ArrayList<>(store.getAccidents());
+    }
+
+    public void save(Accident accident) {
+        store.save(accident);
     }
 }
