@@ -4,8 +4,8 @@
 <head>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
     <title>Accident</title>
 </head>
@@ -13,13 +13,19 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th scope="col">Full Name</th>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Text</th>
+        <th scope="col">Address</th>
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${userList}" var="user">
+    <c:forEach items="${accidents}" var="acc">
         <tr>
-            <td><c:out value="${user}"/></td>
+            <td><c:out value="${acc.id}"/></td>
+            <td><c:out value="${acc.name}"/></td>
+            <td><c:out value="${acc.text}"/></td>
+            <td><c:out value="${acc.address}"/></td>
         </tr>
     </c:forEach>
     </tbody>
