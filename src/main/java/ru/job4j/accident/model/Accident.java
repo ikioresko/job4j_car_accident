@@ -7,6 +7,7 @@ public class Accident {
     private String name;
     private String text;
     private String address;
+    private AccidentType type;
 
     public int getId() {
         return id;
@@ -22,6 +23,14 @@ public class Accident {
 
     public String getAddress() {
         return address;
+    }
+
+    public AccidentType getType() {
+        return type;
+    }
+
+    public void setType(AccidentType type) {
+        this.type = type;
     }
 
     public void setId(int id) {
@@ -64,6 +73,7 @@ public class Accident {
                 + ", name='" + name + '\''
                 + ", text='" + text + '\''
                 + ", address='" + address + '\''
+                + ", accidentType='" + type + '\''
                 + '}';
     }
 }

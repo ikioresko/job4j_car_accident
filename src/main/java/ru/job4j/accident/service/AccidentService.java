@@ -2,20 +2,33 @@ package ru.job4j.accident.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
+import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.repository.MemStore;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccidentService {
-    private MemStore store;
+    private final MemStore store;
 
     public AccidentService(MemStore store) {
         this.store = store;
     }
 
     public List<Accident> getAccidents() {
-        return new ArrayList<>(store.getAccidents());
+        return store.getAccidents();
+    }
+
+    public void save(Accident accident) {
+        store.save(accident);
+    }
+
+    public Optional<Accident> findById(int id) {
+        return Optional.ofNullable(store.getAccidents().get(id - 1));
+    }
+
+    public List<AccidentType> getAccidentTypes() {
+        return store.getAccidentTypes();
     }
 }
