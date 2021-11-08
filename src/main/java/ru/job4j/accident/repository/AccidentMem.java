@@ -2,18 +2,19 @@ package ru.job4j.accident.repository;
 
 import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
+import ru.job4j.accident.model.AccidentType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class AccidentMem implements MemStore {
     private final HashMap<Integer, Accident> accidents = new HashMap<>();
     private final AtomicInteger accidentId = new AtomicInteger(5);
+    private final List<AccidentType> accidentTypes = new ArrayList<>();
 
     public AccidentMem() {
+        generateAccidentTypes();
         for (Accident acc : generate()) {
             accidents.put(acc.getId(), acc);
         }
@@ -21,15 +22,30 @@ public class AccidentMem implements MemStore {
 
     private List<Accident> generate() {
         List<Accident> list = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 1; i < 6; i++) {
             Accident accident = new Accident();
             accident.setId(i);
             accident.setName("Accident" + i);
             accident.setText("Text" + i);
             accident.setAddress("Address" + i);
+            randomSetTypeOfAccident(accident);
             list.add(accident);
         }
         return list;
+    }
+
+    private void generateAccidentTypes() {
+        accidentTypes.add(AccidentType.of(0, "Две машины"));
+        accidentTypes.add(AccidentType.of(1, "Машина и человек"));
+        accidentTypes.add(AccidentType.of(2, "Машина и велосипед"));
+    }
+
+    private void randomSetTypeOfAccident(Accident accident) {
+        int randomId = new Random().nextInt(3);
+        AccidentType accidentType = new AccidentType();
+        accidentType.setId(randomId);
+        accidentType.setName(accidentTypes.get(randomId).getName());
+        accident.setType(accidentType);
     }
 
     @Override
@@ -48,11 +64,23 @@ public class AccidentMem implements MemStore {
 
     private void create(Accident accident) {
         int id = accidentId.incrementAndGet();
+        setupAccidentType(accident);
         accident.setId(id);
         accidents.put(id, accident);
     }
 
     private void update(Accident accident) {
+        setupAccidentType(accident);
         accidents.put(accident.getId(), accident);
+    }
+
+    private void setupAccidentType(Accident accident) {
+        String nameOfType = accidentTypes.get(accident.getType().getId()).getName();
+        accident.getType().setName(nameOfType);
+    }
+
+    @Override
+    public List<AccidentType> getAccidentTypes() {
+        return new ArrayList<>(accidentTypes);
     }
 }
