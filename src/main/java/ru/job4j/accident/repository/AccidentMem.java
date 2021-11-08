@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -22,7 +21,7 @@ public class AccidentMem implements MemStore {
 
     private List<Accident> generate() {
         List<Accident> list = new ArrayList<>();
-        for (int i = 1; i < 6; i++) {
+        for (int i = 0; i < 6; i++) {
             Accident accident = new Accident();
             accident.setId(i);
             accident.setName("Accident" + i);
@@ -34,14 +33,26 @@ public class AccidentMem implements MemStore {
     }
 
     @Override
-    public Collection<Accident> getAccidents() {
-        return accidents.values();
+    public List<Accident> getAccidents() {
+        return new ArrayList<>(accidents.values());
     }
 
     @Override
     public void save(Accident accident) {
+        if (accident.getId() == 0) {
+            create(accident);
+        } else {
+            update(accident);
+        }
+    }
+
+    private void create(Accident accident) {
         int id = accidentId.incrementAndGet();
         accident.setId(id);
         accidents.put(id, accident);
+    }
+
+    private void update(Accident accident) {
+        accidents.put(accident.getId(), accident);
     }
 }

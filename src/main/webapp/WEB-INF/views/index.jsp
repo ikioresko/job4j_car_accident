@@ -17,6 +17,7 @@
         <th scope="col">Name</th>
         <th scope="col">Text</th>
         <th scope="col">Address</th>
+        <th scope="col">UPD</th>
     </tr>
     </thead>
     <tbody>
@@ -26,6 +27,7 @@
             <td><c:out value="${acc.name}"/></td>
             <td><c:out value="${acc.text}"/></td>
             <td><c:out value="${acc.address}"/></td>
+            <td><a href="<c:url value='/edit?id=${acc.id}'/>">Редактировать инцидент</a></td>
         </tr>
     </c:forEach>
     </tbody>
