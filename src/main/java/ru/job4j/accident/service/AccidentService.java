@@ -3,8 +3,10 @@ package ru.job4j.accident.service;
 import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
+import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.repository.MemStore;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +22,11 @@ public class AccidentService {
         return store.getAccidents();
     }
 
-    public void save(Accident accident) {
+    public void save(Accident accident, String[] rules) {
+        accident.setRules(new HashSet<>());
+        for (String str : rules) {
+            accident.getRules().add(store.getRules().get(Integer.parseInt(str) - 1));
+        }
         store.save(accident);
     }
 
@@ -30,5 +36,9 @@ public class AccidentService {
 
     public List<AccidentType> getAccidentTypes() {
         return store.getAccidentTypes();
+    }
+
+    public List<Rule> getRules() {
+        return store.getRules();
     }
 }

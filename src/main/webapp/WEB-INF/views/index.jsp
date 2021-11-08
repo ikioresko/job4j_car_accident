@@ -18,6 +18,7 @@
         <th scope="col">Text</th>
         <th scope="col">Address</th>
         <th scope="col">Type</th>
+        <th scope="col">Rule</th>
         <th scope="col">UPD</th>
     </tr>
     </thead>
@@ -29,6 +30,13 @@
             <td><c:out value="${acc.text}"/></td>
             <td><c:out value="${acc.address}"/></td>
             <td><c:out value="${acc.type.name}"/></td>
+            <td>
+                <table>
+                    <c:forEach items="${acc.rules}" var="rule">
+                        <c:out value="${rule.name}"/>
+                    </c:forEach>
+                </table>
+            </td>
             <td><a href="<c:url value='/edit?id=${acc.id}'/>">Редактировать инцидент</a></td>
         </tr>
     </c:forEach>
