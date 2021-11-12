@@ -1,6 +1,5 @@
 package ru.job4j.accident.repository;
 
-import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
@@ -8,7 +7,6 @@ import ru.job4j.accident.model.Rule;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Repository
 public class AccidentMem implements MemStore {
     private final HashMap<Integer, Accident> accidents = new HashMap<>();
     private final AtomicInteger accidentId = new AtomicInteger(5);
@@ -63,24 +61,26 @@ public class AccidentMem implements MemStore {
     }
 
     @Override
-    public void save(Accident accident) {
+    public Accident save(Accident accident) {
+        Accident rsl;
         if (accident.getId() == 0) {
-            create(accident);
+            rsl = create(accident);
         } else {
-            update(accident);
+            rsl = update(accident);
         }
+        return rsl;
     }
 
-    private void create(Accident accident) {
+    private Accident create(Accident accident) {
         int id = accidentId.incrementAndGet();
         setupAccidentType(accident);
         accident.setId(id);
-        accidents.put(id, accident);
+        return accidents.put(id, accident);
     }
 
-    private void update(Accident accident) {
+    private Accident update(Accident accident) {
         setupAccidentType(accident);
-        accidents.put(accident.getId(), accident);
+        return accidents.put(accident.getId(), accident);
     }
 
     private void setupAccidentType(Accident accident) {

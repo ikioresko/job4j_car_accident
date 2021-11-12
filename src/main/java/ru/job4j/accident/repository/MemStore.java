@@ -12,7 +12,7 @@ public interface MemStore {
 
     List<Rule> getRules();
 
-    void save(Accident accident);
+    Accident save(Accident accident);
 
     List<AccidentType> getAccidentTypes();
 }
