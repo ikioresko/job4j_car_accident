@@ -1,14 +1,12 @@
 package ru.job4j.accident.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
 
 import java.util.List;
 
-@Repository
 public class AccidentJdbcTemplate implements MemStore {
     private final JdbcTemplate jdbc;
 

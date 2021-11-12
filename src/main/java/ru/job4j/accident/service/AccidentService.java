@@ -6,7 +6,6 @@ import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.repository.MemStore;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,10 +22,14 @@ public class AccidentService {
     }
 
     public void save(Accident accident, String[] rules) {
-        accident.setRules(new HashSet<>());
+        List<Rule> rulesList = store.getRules();
         for (String str : rules) {
-            accident.getRules().add(store.getRules().get(Integer.parseInt(str) - 1));
+            accident.getRules().add(rulesList.get(Integer.parseInt(str) - 1));
         }
+        accident.getType()
+                .setName(store.getAccidentTypes()
+                        .get(accident.getType().getId())
+                        .getName());
         store.save(accident);
     }
 
