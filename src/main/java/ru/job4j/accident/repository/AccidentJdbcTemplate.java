@@ -16,22 +16,25 @@ public class AccidentJdbcTemplate implements MemStore {
 
     @Override
     public Accident save(Accident accident) {
-        jdbc.update("insert into accident (name) values (?)",
-                accident.getName());
+        jdbc.update("insert into accident(name, text, address, acc_type_id) values(?, ?, ?, ?)",
+                accident.getName(),
+                accident.getText(),
+                accident.getAddress(),
+                accident.getType().getId());
         return accident;
     }
 
     @Override
     public List<Accident> getAccidents() {
         return jdbc.query(
-                "select * from accident acc join accident_type t on acc.acc_type_id = t.id",
+                "select * from accident acc join type t on acc.acc_type_id = t.id",
                 (rs, row) -> {
                     Accident accident = new Accident();
                     accident.setId(rs.getInt("id"));
                     accident.setName(rs.getString("name"));
                     accident.setText(rs.getString("text"));
                     accident.setAddress(rs.getString("address"));
-                    accident.setType(AccidentType.of(rs.getInt(7), rs.getString(8)));
+                    accident.setType(AccidentType.of(rs.getInt(6), rs.getString(7)));
                     return accident;
                 });
     }
@@ -48,8 +51,14 @@ public class AccidentJdbcTemplate implements MemStore {
     }
 
     @Override
+    public Accident getAccidentByID(int id) {
+        return jdbc.queryForObject("select * from accident where id = " + id,
+                new Accident[]{}, Accident.class);
+    }
+
+    @Override
     public List<AccidentType> getAccidentTypes() {
-        return jdbc.query("select * from accident_type",
+        return jdbc.query("select * from type",
                 (rs, row) -> {
                     AccidentType accType = new AccidentType();
                     accType.setId(rs.getInt("id"));

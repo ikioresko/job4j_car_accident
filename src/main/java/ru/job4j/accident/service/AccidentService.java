@@ -26,15 +26,11 @@ public class AccidentService {
         for (String str : rules) {
             accident.getRules().add(rulesList.get(Integer.parseInt(str) - 1));
         }
-        accident.getType()
-                .setName(store.getAccidentTypes()
-                        .get(accident.getType().getId())
-                        .getName());
         store.save(accident);
     }
 
     public Optional<Accident> findById(int id) {
-        return Optional.ofNullable(store.getAccidents().get(id - 1));
+        return Optional.ofNullable(store.getAccidentByID(id));
     }
 
     public List<AccidentType> getAccidentTypes() {

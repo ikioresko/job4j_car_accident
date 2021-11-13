@@ -83,6 +83,11 @@ public class AccidentMem implements MemStore {
         return accidents.put(accident.getId(), accident);
     }
 
+    @Override
+    public Accident getAccidentByID(int id) {
+        return accidents.get(id);
+    }
+
     private void setupAccidentType(Accident accident) {
         String nameOfType = accidentTypes.get(accident.getType().getId()).getName();
         accident.getType().setName(nameOfType);

@@ -15,4 +15,6 @@ public interface MemStore {
     Accident save(Accident accident);
 
     List<AccidentType> getAccidentTypes();
+
+    Accident getAccidentByID(int id);
 }
