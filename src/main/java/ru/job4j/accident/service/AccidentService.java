@@ -4,40 +4,46 @@ import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
-import ru.job4j.accident.repository.MemStore;
+import ru.job4j.accident.repository.AccidentRepository;
+import ru.job4j.accident.repository.RuleRepo;
+import ru.job4j.accident.repository.TypeRepo;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AccidentService {
-    private final MemStore store;
+    private final AccidentRepository accidentRepository;
+    private final RuleRepo ruleRepo;
+    private final TypeRepo typeRepo;
 
-    public AccidentService(MemStore store) {
-        this.store = store;
+    public AccidentService(AccidentRepository store, RuleRepo ruleRepo, TypeRepo typeRepo) {
+        this.accidentRepository = store;
+        this.ruleRepo = ruleRepo;
+        this.typeRepo = typeRepo;
     }
 
     public List<Accident> getAccidents() {
-        return store.getAccidents();
+        return accidentRepository.findAll();
     }
 
     public void save(Accident accident, String[] rules) {
-        List<Rule> rulesList = store.getRules();
+        List<Rule> rulesList = (List<Rule>) ruleRepo.findAll();
         for (String str : rules) {
             accident.getRules().add(rulesList.get(Integer.parseInt(str) - 1));
         }
-        store.save(accident);
+        accidentRepository.save(accident);
     }
 
     public Optional<Accident> findById(int id) {
-        return Optional.ofNullable(store.getAccidentByID(id));
+        return accidentRepository.findById(id);
     }
 
     public List<AccidentType> getAccidentTypes() {
-        return store.getAccidentTypes();
+        return (List<AccidentType>) typeRepo.findAll();
     }
 
     public List<Rule> getRules() {
-        return store.getRules();
+        return (List<Rule>) ruleRepo.findAll();
     }
 }

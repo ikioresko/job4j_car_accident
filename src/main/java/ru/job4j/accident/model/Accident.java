@@ -18,7 +18,7 @@ public class Accident {
     @JoinColumn(name = "acc_type_id")
     private AccidentType type;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = CascadeType.REMOVE)
     private Set<Rule> rules = new HashSet<>();
 
     public Accident() {

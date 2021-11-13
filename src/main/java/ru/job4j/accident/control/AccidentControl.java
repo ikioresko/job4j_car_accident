@@ -37,7 +37,7 @@ public class AccidentControl {
     public String edit(@RequestParam("id") int id, Model model) {
         model.addAttribute("types", accidentService.getAccidentTypes());
         model.addAttribute("rules", accidentService.getRules());
-        model.addAttribute("accident", accidentService.findById(id).get());
+        model.addAttribute("accident", accidentService.findById(id).orElse(null));
         return "accident/edit";
     }
 }
