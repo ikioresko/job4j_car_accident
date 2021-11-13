@@ -10,6 +10,9 @@
     <title>Accident</title>
 </head>
 <body>
+<div>
+    Login as : ${user.username}
+</div>
 <table class="table table-striped">
     <thead>
     <tr>
