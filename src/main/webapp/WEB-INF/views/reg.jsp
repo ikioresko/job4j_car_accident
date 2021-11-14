@@ -1,8 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
+<head>
+    <title>Accident register</title>
+</head>
 <body>
-<form name='login' action="<c:url value='/reg'/>" method='POST'>
+<c:if test="${not empty errorMessage}">
+    <div style="color:red; font-weight: bold; margin: 30px 0;">
+            ${errorMessage}
+    </div>
+</c:if>
+<form name='register' action="<c:url value='/reg'/>" method='POST'>
     <table>
         <tr>
             <td>UserName:</td>
@@ -13,7 +21,7 @@
             <td><input type='password' name='password'/></td>
         </tr>
         <tr>
-            <td colspan='2'><input name="submit" type="submit" value="submit" /></td>
+            <td colspan='2'><input name="submit" type="submit" value="submit"/></td>
         </tr>
     </table>
 </form>

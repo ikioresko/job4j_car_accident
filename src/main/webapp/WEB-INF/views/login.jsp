@@ -1,8 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
+<head>
+  <title>Accident login</title>
+</head>
 <body>
-<div><a href="<c:url value='/reg'/>">Регистрация</a></div>
+<div>
+  <a href="<c:url value='/reg'/>">Регистрация</a>
+</div>
 <c:if test="${not empty errorMessage}">
   <div style="color:red; font-weight: bold; margin: 30px 0px;">
       ${errorMessage}
