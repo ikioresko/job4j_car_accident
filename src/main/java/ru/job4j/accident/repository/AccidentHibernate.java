@@ -72,7 +72,7 @@ public class AccidentHibernate implements MemStore {
     @Override
     public Accident getAccidentByID(int id) {
         return this.tx(session -> session.createQuery("select distinct a from Accident a "
-                + "join fetch a.rules where a.id =: ID order by a.id asc", Accident.class)
+                + "join fetch a.rules where a.id =: ID", Accident.class)
                 .setParameter("ID", id).uniqueResult());
     }
 
